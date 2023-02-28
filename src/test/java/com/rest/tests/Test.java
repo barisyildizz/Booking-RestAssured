@@ -94,12 +94,12 @@ public class Test {
                 "    \"additionalneeds\" : \"Breakfast\"\n" +
                 "}";
 
-        Response response = given().
+        Response response = given(getRequestSpec()).
                 contentType(ContentType.JSON).
                 header("accept", "application/json").
                 when().
                 body(payload).
-                post("https://restful-booker.herokuapp.com/booking").
+                post("/booking").
                 then().
                 statusCode(200).
                 extract().
@@ -145,13 +145,13 @@ public class Test {
 //                "    \"lastname\" : \"Duman\"\n" +
 //                "}";
 
-        given().
+        given(getRequestSpec()).
                 contentType(ContentType.JSON).
                 header("accept", "application/json").
                 header("Cookie", "token=" + tooken).
                 when().
                 body(booking).
-                patch("https://restful-booker.herokuapp.com/booking/23").
+                patch("/booking/23").
                 then().
                 assertThat().statusCode(200).
                 log().all();
