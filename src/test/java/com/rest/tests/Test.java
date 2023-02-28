@@ -3,6 +3,10 @@ package com.rest.tests;
 import com.rest.pojo.Booking;
 import com.rest.pojo.Error;
 import com.rest.pojo.Token;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Stories;
+import io.qameta.allure.Story;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -13,13 +17,16 @@ import static com.rest.builder.SpecBuilder.getResponseSpec;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
+@Epic("Restful Booker API Automation")
 public class Test {
     String tooken;
     Integer bookingID;
     Token tok;
 
-
-    @org.testng.annotations.Test(priority = 1)
+    @Description("Bu test casede, kullanıcı ve şifre body bilgileri ile token oluşturulacaktır ve " +
+            "tooken değerine atılıp diğer test caselerde kullanılacaktır.")
+    @org.testng.annotations.Test(priority = 1, description = "Should be able to create a Token with valid data")
+    @Story("Book a reservation")
     public void createToken() {
         tok = new Token();
         tok.setUsername("admin");
@@ -44,7 +51,9 @@ public class Test {
         tooken = response.path("token");
     }
 
-    @org.testng.annotations.Test(priority = 2)
+    @io.qameta.allure.Description("Bu test casede yanlış kullanıcı adı ve şifre denenerek token oluşuturulamadığı," +
+            " hata mesajı görüldüğü doğrulanacaktır.")
+    @org.testng.annotations.Test(priority = 2, description = "Should not be able to create Token with invalid data")
     public void canNotCreateToken() {
         tok = new Token();
         tok.setUsername("admin");
@@ -79,7 +88,8 @@ public class Test {
     }
 
 
-    @org.testng.annotations.Test(priority = 3)
+    @org.testng.annotations.Test(priority = 3, description = "Should be able to create booking")
+    @Story("Book a reservation")
     public void createBooking() {
 
         String payload = "{\n" +
@@ -110,7 +120,8 @@ public class Test {
 
     }
 
-    @org.testng.annotations.Test(priority = 4)
+    @org.testng.annotations.Test(priority = 4, description = "Should be able to see booking details")
+    @Story("Book a reservation")
     public void getBooking() {
 
         given(getRequestSpec()).
@@ -133,7 +144,7 @@ public class Test {
     }
 
 
-    @org.testng.annotations.Test(priority = 5)
+    @org.testng.annotations.Test(priority = 5, description = "Should be able to update some part of the booking info")
     public void patchBooking() {
 
         Booking booking = new Booking();

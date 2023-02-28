@@ -1,5 +1,6 @@
 package com.rest.builder;
 
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -14,6 +15,7 @@ public class SpecBuilder {
                 setBaseUri("https://restful-booker.herokuapp.com").
                 addHeader("Authorization", "Bearer ").
                 setContentType(ContentType.JSON).
+                addFilter(new AllureRestAssured()).
                 log(LogDetail.ALL).
                 build();
     }
